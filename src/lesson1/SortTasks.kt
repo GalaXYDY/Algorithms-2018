@@ -2,6 +2,11 @@
 
 package lesson1
 
+import java.io.File
+import java.io.FileWriter
+import java.util.*
+import kotlin.collections.ArrayList
+
 /**
  * Сортировка времён
  *
@@ -30,8 +35,26 @@ package lesson1
  *
  * В случае обнаружения неверного формата файла бросить любое исключение.
  */
+
 fun sortTimes(inputName: String, outputName: String) {
-    TODO()
+    val text = File(inputName).readLines()
+    val result = File(outputName).bufferedWriter()
+    val timeInSec = ArrayList<Int>()
+    for (i in 0 until text.size) {
+        if (!text[i].matches(Regex("""((([0-1][0-9])|(2[0-4])):[0-5][0-9]:[0-5][0-9])""")))
+            throw IllegalArgumentException()
+        val time = text[i].split(":")
+        timeInSec.add(time[0].toInt() * 3600 + time[1].toInt() * 60 + time[2].toInt())
+    }
+    timeInSec.sort()
+    for (i in timeInSec){
+        val hr = i / 3600
+        val min = (i % 3600) / 60
+        val sec = i % 60
+        result.write(String.format("%02d:%02d:%02d", hr, min, sec))
+        result.newLine()
+    }
+    result.close()
 }
 
 /**
