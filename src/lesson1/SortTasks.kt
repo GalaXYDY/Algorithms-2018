@@ -39,7 +39,7 @@ import kotlin.collections.ArrayList
 fun sortTimes(inputName: String, outputName: String) {
     val text = File(inputName).readLines()
     val result = File(outputName).bufferedWriter()
-    val timeInSec = ArrayList<Int>()
+    val timeInSec = mutableListOf<Int>()
     for (i in 0 until text.size) {
         if (!text[i].matches(Regex("""((([0-1][0-9])|(2[0-4])):[0-5][0-9]:[0-5][0-9])""")))
             throw IllegalArgumentException()
@@ -47,7 +47,7 @@ fun sortTimes(inputName: String, outputName: String) {
         timeInSec.add(time[0].toInt() * 3600 + time[1].toInt() * 60 + time[2].toInt())
     }
     timeInSec.sort()
-    for (i in timeInSec){
+    for (i in timeInSec) {
         val hr = i / 3600
         val min = (i % 3600) / 60
         val sec = i % 60
@@ -118,7 +118,20 @@ fun sortAddresses(inputName: String, outputName: String) {
  * 121.3
  */
 fun sortTemperatures(inputName: String, outputName: String) {
-    TODO()
+    val text = File(inputName).readLines()
+    val result = File(outputName).bufferedWriter()
+    val list = mutableListOf<Double>()
+    for (i in 0 until text.size) {
+        if (text[i].toDouble() < -273.0 || text[i].toDouble() > 500.0)
+            throw IllegalArgumentException()
+        list.add(text[i].toDouble())
+    }
+    list.sort()
+    for (k in list) {
+        result.write(k.toString())
+        result.newLine()
+    }
+    result.close()
 }
 
 /**
