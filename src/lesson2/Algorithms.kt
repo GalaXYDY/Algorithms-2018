@@ -122,7 +122,10 @@ fun longestCommonSubstring(first: String, second: String): String {
  * Единица простым числом не считается.
  */
 fun calcPrimesNumber(limit: Int): Int {
+    if (limit <= 1) return 0
+    var amount = 0
     TODO()
+
 }
 
 /**
