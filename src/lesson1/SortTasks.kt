@@ -164,7 +164,8 @@ fun sortTemperatures(inputName: String, outputName: String) {
  * 2
  */
 fun sortSequence(inputName: String, outputName: String) {
-    TODO()
+    for (line in File(inputName).readLines())
+        TODO()
 }
 
 /**

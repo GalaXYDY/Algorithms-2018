@@ -108,7 +108,28 @@ fun josephTask(menNumber: Int, choiceInterval: Int): Int {
  * вернуть ту из них, которая встречается раньше в строке first.
  */
 fun longestCommonSubstring(first: String, second: String): String {
+    if (first.isEmpty() || second.isEmpty()) return ""
+    val list = MutableList(first.length + 1) { IntArray(second.length + 1) }
+    var max = 0
+    var maxInd = Pair(0, 0)
+    val result = StringBuilder()
+    for (i in 1 until first.length) {
+        for (k in 1 until second.length) {
+            if (first[i - 1] == second[k - 1]) {
+                list[i][k] = list[i - 1][k - 1] + 1
+                if (max < list[i][k]) {
+                    max = list[i][k]
+                    maxInd = Pair(i, k)
+                }
+            }
+        }
+    }
+    while (maxInd.first >= 0 && maxInd.second >= 0 && list[maxInd.first][maxInd.second] != 0) {
+        result.append(first[maxInd.first - 1])
+        maxInd = Pair(maxInd.first - 1, maxInd.second - 1)
+    }
     TODO()
+    return result.reverse().toString()
 }
 
 /**
@@ -122,10 +143,7 @@ fun longestCommonSubstring(first: String, second: String): String {
  * Единица простым числом не считается.
  */
 fun calcPrimesNumber(limit: Int): Int {
-    if (limit <= 1) return 0
-    var amount = 0
     TODO()
-
 }
 
 /**
