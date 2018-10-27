@@ -164,8 +164,38 @@ fun sortTemperatures(inputName: String, outputName: String) {
  * 2
  */
 fun sortSequence(inputName: String, outputName: String) {
-    for (line in File(inputName).readLines())
-        TODO()
+    val list = mutableListOf<Int>()
+    val result = File(outputName).bufferedWriter()
+    var max = 0
+    var max2 = 0
+    for (line in File(inputName).readLines()){
+        if (list.size > line.toInt()){
+            list[line.toInt()] = list[line.toInt()] + 1
+        }
+        else{
+            while (list.size <= line.toInt()){
+                list.add(0)
+            }
+            list.add(line.toInt(), 1)
+        }
+    }
+    for (i in 0 until list.size){
+        if (list[i] > max){
+            max = list[i]
+            max2 = i
+        }
+    }
+    for (line in File(inputName).readLines()){
+        if (line.toInt() != max2){
+            result.write(line)
+            result.newLine()
+        }
+    }
+    for (i in 0 until max){
+        result.write(max2.toString())
+        result.newLine()
+    }
+    result.close()
 }
 
 /**
