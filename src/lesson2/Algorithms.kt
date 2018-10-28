@@ -42,6 +42,8 @@ fun optimizeBuyAndSell(inputName: String): Pair<Int, Int> {
     }
     return result
 }
+//Трудоемкость - T = O(n^2)
+//Ресурсоемкость - R = O(n)
 
 /**
  * Задача Иосифа Флафия.
@@ -95,6 +97,8 @@ fun josephTask(menNumber: Int, choiceInterval: Int): Int {
         result = (result + choiceInterval) % (i + 1)
     return result + 1
 }
+//Трудоемкость - T = O(n)
+//Ресурсоемкость - R = O(n)
 
 /**
  * Наибольшая общая подстрока.
@@ -130,6 +134,8 @@ fun longestCommonSubstring(first: String, second: String): String {
     }
     return result.reverse().toString()
 }
+//Трудоемкость - T = O(m*n)
+//Ресурсоемкость - R = O(m*n)
 
 /**
  * Число простых чисел в интервале

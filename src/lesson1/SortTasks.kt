@@ -56,6 +56,8 @@ fun sortTimes(inputName: String, outputName: String) {
     }
     result.close()
 }
+//Трудоемкость - T = O(nlogn)
+//Ресурсоемкость - R = O(n)
 
 /**
  * Сортировка адресов
@@ -133,6 +135,8 @@ fun sortTemperatures(inputName: String, outputName: String) {
     }
     result.close()
 }
+//Трудоемкость - T = O(nlogn)
+//Ресурсоемкость - R = O(n)
 
 /**
  * Сортировка последовательности
@@ -166,8 +170,8 @@ fun sortTemperatures(inputName: String, outputName: String) {
 fun sortSequence(inputName: String, outputName: String) {
     val list = mutableListOf<Int>()
     val result = File(outputName).bufferedWriter()
+    var num = 0
     var max = 0
-    var max2 = 0
     for (line in File(inputName).readLines()){
         if (list.size > line.toInt()){
             list[line.toInt()] = list[line.toInt()] + 1
@@ -180,23 +184,25 @@ fun sortSequence(inputName: String, outputName: String) {
         }
     }
     for (i in 0 until list.size){
-        if (list[i] > max){
-            max = list[i]
-            max2 = i
+        if (list[i] > num){
+            num = list[i]
+            max = i
         }
     }
     for (line in File(inputName).readLines()){
-        if (line.toInt() != max2){
+        if (line.toInt() != max){
             result.write(line)
             result.newLine()
         }
     }
-    for (i in 0 until max){
-        result.write(max2.toString())
+    for (i in 0 until num){
+        result.write(max.toString())
         result.newLine()
     }
     result.close()
 }
+//Трудоемкость - T = O(n)
+//Ресурсоемкость - R = O(n)
 
 /**
  * Соединить два отсортированных массива в один
