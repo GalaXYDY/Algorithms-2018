@@ -172,15 +172,17 @@ fun sortSequence(inputName: String, outputName: String) {
     val result = File(outputName).bufferedWriter()
     var num = 0
     var max = 0
-    for (line in File(inputName).readLines()){
-        if (list.size > line.toInt()){
-            list[line.toInt()] = list[line.toInt()] + 1
+    val fileList = ArrayList<Int>()
+    File(inputName).readLines().forEach{fileList.add(it.toInt())}
+    for (line in fileList){
+        if (list.size > line){
+            list[line] = list[line] + 1
         }
         else{
-            while (list.size <= line.toInt()){
+            while (list.size <= line){
                 list.add(0)
             }
-            list.add(line.toInt(), 1)
+            list.add(line, 1)
         }
     }
     for (i in 0 until list.size){
@@ -189,9 +191,9 @@ fun sortSequence(inputName: String, outputName: String) {
             max = i
         }
     }
-    for (line in File(inputName).readLines()){
-        if (line.toInt() != max){
-            result.write(line)
+    for (line in fileList){
+        if (line != max){
+            result.write(line.toString())
             result.newLine()
         }
     }

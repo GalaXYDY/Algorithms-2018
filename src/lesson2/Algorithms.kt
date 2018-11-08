@@ -3,6 +3,7 @@
 package lesson2
 
 import java.io.File
+import java.util.ArrayList
 
 /**
  * Получение наибольшей прибыли (она же -- поиск максимального подмассива)
@@ -30,12 +31,13 @@ import java.io.File
  */
 fun optimizeBuyAndSell(inputName: String): Pair<Int, Int> {
     var result = Pair(0, 0)
-    val line = File(inputName).readLines()
+    val list = ArrayList<Int>()
+    File(inputName).readLines().forEach{list.add(it.toInt())}
     var maxDiff = 0
-    for (i in 0 until line.size) {
-        for (k in i until line.size) {
-            if (line[k].toInt() - line[i].toInt() > maxDiff) {
-                maxDiff = line[k].toInt() - line[i].toInt()
+    for (i in 0 until list.size) {
+        for (k in i until list.size) {
+            if (list[k] - list[i] > maxDiff) {
+                maxDiff = list[k] - list[i]
                 result = Pair(i + 1, k + 1)
             }
         }
@@ -113,7 +115,7 @@ fun josephTask(menNumber: Int, choiceInterval: Int): Int {
  */
 fun longestCommonSubstring(first: String, second: String): String {
     if (first.isEmpty() || second.isEmpty()) return ""
-    val list = MutableList(first.length + 1) { IntArray(second.length + 1) }
+    val list = Array(first.length + 1) { IntArray(second.length + 1) }
     var max = 0
     var maxInd = Pair(-1, -1)
     val result = StringBuilder()
