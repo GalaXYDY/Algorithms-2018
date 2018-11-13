@@ -11,7 +11,7 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
     override var size = 0
         private set
 
-    private class Node<T>(val value: T) {
+    private class Node<T>(var value: T) {
 
         var left: Node<T>? = null
 
@@ -54,8 +54,72 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
      * Удаление элемента в дереве
      * Средняя
      */
+
+    private fun enter(node: Node<T>, newOne: Node<T>?) {
+        val parent = findParent(node.value)
+        if (parent == null) {
+            if (newOne == null) {
+                root = null
+                return
+            }
+            root!!.value = newOne.value
+            root!!.left = newOne.left
+            root!!.right = newOne.right
+            return
+        }
+        if (parent.left === node) parent.left = newOne
+        if (parent.right === node) parent.right = newOne
+    }
+
+    private fun del(node: Node<T>) {
+        enter(node, null)
+    }
+
     override fun remove(element: T): Boolean {
-        TODO()
+        val element2 = find(element)
+        if (element2 == null || element2.value !== element) return false
+
+        if (element2.left == null && element2.right == null) del(element2)
+        else if (element2.left == null) enter(element2, element2.right)
+        else if (element2.right == null) enter(element2, element2.left)
+        else {
+            val change = min(element2.left)
+            val value = change!!.value
+            remove(change.value)
+            size++
+            element2.value = value
+        }
+        size--
+        return true
+    }
+
+    private fun min(root: Node<T>?): Node<T>? {
+        if (root == null) return null
+        if (root.right != null) return min(root.right)
+
+        return root
+    }
+
+    private fun findParent(value: T, start: Node<T>): Node<T> {
+        if (start.left != null && start.left!!.value === value
+                || start.right != null && start.right!!.value === value) return start
+        val comparison = value.compareTo(start.value)
+        when {
+            comparison > 0 -> {
+                if (start.right == null) return start
+                return findParent(value, start.right!!)
+            }
+            comparison < 0 -> {
+                if (start.left == null) return start
+                return findParent(value, start.left!!)
+            }
+            else -> return start
+        }
+    }
+
+    private fun findParent(value: T): Node<T>? {
+        if (root == null || (root as Node<T>).value === value) return null
+        return findParent(value, root!!)
     }
 
     override operator fun contains(element: T): Boolean {
@@ -84,7 +148,7 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
          * Средняя
          */
         private fun findNext(): Node<T>? {
-            TODO()
+            return null
         }
 
         override fun hasNext(): Boolean = findNext() != null
