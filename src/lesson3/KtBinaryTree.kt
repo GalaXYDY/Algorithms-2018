@@ -2,6 +2,7 @@ package lesson3
 
 import java.util.SortedSet
 import kotlin.NoSuchElementException
+import java.util.TreeSet
 
 // Attention: comparable supported but comparator is not
 class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSortedSet<T> {
@@ -184,7 +185,19 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
      * Сложная
      */
     override fun headSet(toElement: T): SortedSet<T> {
-        TODO()
+        val sortedSet = TreeSet<T>()
+        return headSet(root, last(), sortedSet).headSet(toElement)
+    }
+
+    private fun headSet(root: Node<T>?, toElement: T, set: SortedSet<T>): SortedSet<T> {
+        if (root == null) return set
+        val comparison = toElement.compareTo(root.value)
+        if (comparison >= 0){
+            set.add(root.value)
+            headSet(root.right, toElement, set)
+            headSet(root.left, toElement, set)
+        }
+        return set
     }
 
     /**
@@ -192,7 +205,19 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
      * Сложная
      */
     override fun tailSet(fromElement: T): SortedSet<T> {
-        TODO()
+        val sortedSet = TreeSet<T>()
+        return tailSet(root, first(), sortedSet).tailSet(fromElement)
+    }
+
+    private fun tailSet(root: Node<T>?, fromElement: T, sortedSet: SortedSet<T>): SortedSet<T> {
+        if (root == null) return sortedSet
+        val comparison = fromElement.compareTo(root.value)
+        if (comparison <= 0){
+            sortedSet.add(root.value)
+            tailSet(root.right, fromElement, sortedSet)
+            tailSet(root.left, fromElement, sortedSet)
+        }
+        return sortedSet
     }
 
     override fun first(): T {
