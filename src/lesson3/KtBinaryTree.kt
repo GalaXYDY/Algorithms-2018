@@ -189,15 +189,15 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
         return headSet(root, last(), sortedSet).headSet(toElement)
     }
 
-    private fun headSet(root: Node<T>?, toElement: T, set: SortedSet<T>): SortedSet<T> {
-        if (root == null) return set
+    private fun headSet(root: Node<T>?, toElement: T, sortedSet: SortedSet<T>): SortedSet<T> {
+        if (root == null) return sortedSet
         val comparison = toElement.compareTo(root.value)
         if (comparison >= 0){
-            set.add(root.value)
-            headSet(root.right, toElement, set)
-            headSet(root.left, toElement, set)
+            sortedSet.add(root.value)
+            headSet(root.right, toElement, sortedSet)
+            headSet(root.left, toElement, sortedSet)
         }
-        return set
+        return sortedSet
     }
 
     /**
