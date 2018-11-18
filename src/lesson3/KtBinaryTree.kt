@@ -55,6 +55,8 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
      * Удаление элемента в дереве
      * Средняя
      */
+    // Трудоемкость Т = O(logN)
+    // Ресурсоемкость R = O(1)
 
     private fun enter(node: Node<T>, newNode: Node<T>?) {
         val parent = findParent(node.value)
@@ -152,6 +154,9 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
          * Поиск следующего элемента
          * Средняя
          */
+        // Трудоемкость Т = О(N)
+        // Ресурсоемкость R = О(N)
+
         private fun findNext(): Node<T>? {
             if (root == null) return null
             if (current == null) return min(root)
@@ -188,6 +193,9 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
          * Удаление следующего элемента
          * Сложная
          */
+        // Трудоемкоть Т = O(logN)
+        // Ресурсоемкость R = O(1)
+
         override fun remove() {
             if (current != null) remove(current!!.value)
         }
@@ -209,6 +217,9 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
      * Найти множество всех элементов меньше заданного
      * Сложная
      */
+    // Трудоемкоть Т = O(N)
+    // Ресурсоемкость R = O(N)
+
     override fun headSet(toElement: T): SortedSet<T> {
         val sortedSet = TreeSet<T>()
         return headSet(root, last(), sortedSet).headSet(toElement)
@@ -229,6 +240,9 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
      * Найти множество всех элементов больше или равных заданного
      * Сложная
      */
+    // Трудоемкоть Т = O(N)
+    // Ресурсоемкость R = O(N)
+
     override fun tailSet(fromElement: T): SortedSet<T> {
         val sortedSet = TreeSet<T>()
         return tailSet(root, first(), sortedSet).tailSet(fromElement)
