@@ -85,16 +85,16 @@ fun shortestPathOnField(inputName: String): Int {
     File(inputName).forEachLine { list.add(it.split(" ")) }
     val height = list.size
     val length = list[0].size
-    val field = Array(height){ IntArray(length)}
+    val field = Array(height) { IntArray(length) }
     field[0][0] = list[0][0].toInt()
-    for (i in 1 until length){
+    for (i in 1 until length) {
         field[0][i] = list[0][i].toInt() + field[0][i - 1]
     }
-    for (i in 1 until height){
+    for (i in 1 until height) {
         field[i][0] = list[i][0].toInt() + field[i - 1][0]
     }
-    for (i in 1 until length){
-        for (j in 1 until height){
+    for (i in 1 until length) {
+        for (j in 1 until height) {
             val min = min(min(field[j - 1][i], field[j][i - 1]), field[j - 1][i - 1])
             field[j][i] = list[j][i].toInt() + min
         }
