@@ -34,6 +34,9 @@ fun longestCommonSubSequence(first: String, second: String): String {
  * то вернуть ту, в которой числа расположены раньше (приоритет имеют первые числа).
  * В примере ответами являются 2, 8, 9, 12 или 2, 5, 9, 12 -- выбираем первую из них.
  */
+
+// Трудоёмкость T = O(n^2)
+// Ресурсоёмкость R = O(n)
 fun longestIncreasingSubSequence(list: List<Int>): List<Int> {
     if (list.isEmpty() || list.size == 1) return list
     var max = 0
@@ -80,6 +83,9 @@ fun longestIncreasingSubSequence(list: List<Int>): List<Int> {
  *
  * Здесь ответ 2 + 3 + 4 + 1 + 2 = 12
  */
+
+// Трудоёмкость T = O(m*n)
+// Ресурсоёмкость R = O(m*n)
 fun shortestPathOnField(inputName: String): Int {
     val list = ArrayList<List<String>>()
     File(inputName).forEachLine { list.add(it.split(" ")) }
