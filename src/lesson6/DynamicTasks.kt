@@ -2,8 +2,10 @@
 
 package lesson6
 
-import java.util.*
+import java.io.File
 import java.util.Arrays.*
+import kotlin.collections.ArrayList
+import kotlin.math.min
 
 /**
  * Наибольшая общая подпоследовательность.
@@ -39,9 +41,9 @@ fun longestIncreasingSubSequence(list: List<Int>): List<Int> {
     val prev = IntArray(list.size)
     fill(length, 1)
     fill(prev, -1)
-    for (i in 1 until list.size){
-        for (j in 0 until i){
-            if (list[j] < list[i] && length[j] + 1 > length[i]){
+    for (i in 1 until list.size) {
+        for (j in 0 until i) {
+            if (list[j] < list[i] && length[j] + 1 > length[i]) {
                 prev[i] = j
                 length[i] = length[j] + 1
                 if (length[max] < length[i]) max = i
@@ -51,7 +53,7 @@ fun longestIncreasingSubSequence(list: List<Int>): List<Int> {
     var count = length[max]
     val result = IntArray(count)
     var i = max
-    while (i != -1){
+    while (i != -1) {
         result[--count] = list[i]
         i = prev[i]
     }
@@ -79,7 +81,25 @@ fun longestIncreasingSubSequence(list: List<Int>): List<Int> {
  * Здесь ответ 2 + 3 + 4 + 1 + 2 = 12
  */
 fun shortestPathOnField(inputName: String): Int {
-    TODO()
+    val list = ArrayList<List<String>>()
+    File(inputName).forEachLine { list.add(it.split(" ")) }
+    val height = list.size
+    val length = list[0].size
+    val field = Array(height){ IntArray(length)}
+    field[0][0] = list[0][0].toInt()
+    for (i in 1 until length){
+        field[0][i] = list[0][i].toInt() + field[0][i - 1]
+    }
+    for (i in 1 until height){
+        field[i][0] = list[i][0].toInt() + field[i - 1][0]
+    }
+    for (i in 1 until length){
+        for (j in 1 until height){
+            val min = min(min(field[j - 1][i], field[j][i - 1]), field[j - 1][i - 1])
+            field[j][i] = list[j][i].toInt() + min
+        }
+    }
+    return field[height - 1][length - 1]
 }
 
 // Задачу "Максимальное независимое множество вершин в графе без циклов"
