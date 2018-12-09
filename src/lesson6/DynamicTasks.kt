@@ -2,6 +2,9 @@
 
 package lesson6
 
+import java.util.*
+import java.util.Arrays.*
+
 /**
  * Наибольшая общая подпоследовательность.
  * Средняя
@@ -30,7 +33,29 @@ fun longestCommonSubSequence(first: String, second: String): String {
  * В примере ответами являются 2, 8, 9, 12 или 2, 5, 9, 12 -- выбираем первую из них.
  */
 fun longestIncreasingSubSequence(list: List<Int>): List<Int> {
-    TODO()
+    if (list.isEmpty() || list.size == 1) return list
+    var max = 0
+    val length = IntArray(list.size)
+    val prev = IntArray(list.size)
+    fill(length, 1)
+    fill(prev, -1)
+    for (i in 1 until list.size){
+        for (j in 0 until i){
+            if (list[j] < list[i] && length[j] + 1 > length[i]){
+                prev[i] = j
+                length[i] = length[j] + 1
+                if (length[max] < length[i]) max = i
+            }
+        }
+    }
+    var count = length[max]
+    val result = IntArray(count)
+    var i = max
+    while (i != -1){
+        result[--count] = list[i]
+        i = prev[i]
+    }
+    return result.toList()
 }
 
 /**
